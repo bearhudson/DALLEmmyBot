@@ -1,4 +1,3 @@
-import io
 import urllib.request
 
 import requests
@@ -15,7 +14,6 @@ def generate(client, text):
         n=1,
         size="1024x1024",
     )
-    print(res.data[0])
     image_url = res.data[0]
     print(image_url.url)
     return image_url.url
@@ -25,8 +23,8 @@ def main():
     client = openai.OpenAI(
         api_key=os.getenv("OPENAI_API_KEY")
     )
-    text = ("A female chihuahua pitbull mix with a dark brown brindle coat and a bone in her mouth laying down "
-            "in the sand on a tropical beach looking at the ocean.")
+    text = ("A female chihuahua pit-bull mix with a dark brindle coat with a brindle chest "
+            "and a bone in her mouth laying down in the sand on a tropical beach looking at the ocean.")
     url1 = generate(client, text)
     response = requests.get(url1)
     try:
