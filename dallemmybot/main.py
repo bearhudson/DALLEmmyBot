@@ -10,9 +10,11 @@ import os
 
 def generate(client, text):
     res = client.images.generate(
+        model="dall-e-3",
+        quality="hd",
         prompt=text,
         n=1,
-        size="1024x1024",
+        size="1792x1024",
     )
     image_url = res.data[0]
     print(image_url.url)
@@ -24,7 +26,8 @@ def main():
         api_key=os.getenv("OPENAI_API_KEY")
     )
     text = ("A female chihuahua pit-bull mix with a dark brindle coat with a brindle chest "
-            "and a bone in her mouth laying down in the sand on a tropical beach looking at the ocean.")
+            "and a bone in her mouth laying down in the sand on a tropical beach looking at the ocean with "
+            "volumetric lighting and lens bokeh.")
     url1 = generate(client, text)
     response = requests.get(url1)
     try:
