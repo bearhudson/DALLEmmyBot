@@ -25,7 +25,8 @@ def main():
     client = openai.OpenAI(
         api_key=os.getenv("OPENAI_API_KEY")
     )
-    text = "A large female chihuahua mix with a full, dark, brindle coat and a bone in her mouth on a tropical beach."
+    text = ("A female chihuahua pitbull mix with a dark brown brindle coat and a bone in her mouth laying down "
+            "in the sand on a tropical beach looking at the ocean.")
     url1 = generate(client, text)
     response = requests.get(url1)
     try:
