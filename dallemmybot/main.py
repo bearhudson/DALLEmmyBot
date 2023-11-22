@@ -33,10 +33,12 @@ def main():
     decoded_url = urllib.parse.unquote(r_topic.url)
     topic_index = decoded_url.rfind('/')
     r_topic_str = decoded_url[topic_index + 1:].replace('_', ' ')
+    item_description = gt_agent.run(f"Tell me some brief details about {r_topic_str}.")
     full_text = gt_agent.run(f"Write me a sentence about {r_topic_str} from the perspective of a director writing a "
-                             f"movie scene and include as much detail as possible about the colors, "
-                             f"angles, subjects and objects in the scene but do not use "
-                             f"the word camera and keep the view static.")
+                             f"movie scene at a random time in the day and include as much detail as possible "
+                             f"about the colors, angles, subjects and objects in the scene but do not use "
+                             f"the word camera and keep the view static and obey the rule of thirds including the "
+                             f"following details -- {item_description}.")
     print(full_text.output_task)
     url1 = generate(client, str(full_text.output_task))
     response = requests.get(url1)
