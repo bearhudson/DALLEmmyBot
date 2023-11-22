@@ -7,6 +7,7 @@ from io import BytesIO
 import openai
 import os
 from griptape.structures import Agent
+import time
 
 
 def generate(client, text):
@@ -23,6 +24,7 @@ def generate(client, text):
 
 
 def main():
+    t_stamp = int(time.time())
     client = openai.OpenAI(
         api_key=os.getenv("OPENAI_API_KEY")
     )
@@ -33,15 +35,20 @@ def main():
     r_topic_str = decoded_url[topic_index + 1:].replace('_', ' ')
     full_text = gt_agent.run(f"Write me a sentence about {r_topic_str} from the perspective of a director writing a "
                              f"movie scene and include as much detail as possible about the colors, "
-                             f"angles, subjects and objects in the scene but do not use the word camera.")
+                             f"angles, subjects and objects in the scene but do not use "
+                             f"the word camera and keep the view static.")
     print(full_text.output_task)
     url1 = generate(client, str(full_text.output_task))
     response = requests.get(url1)
     try:
+        text_file = f"{t_stamp}-{r_topic_str}.txt"
+        image_file = f"{t_stamp}-{r_topic_str}.png"
         img = urllib.request.urlopen(response.url)
         img_file = BytesIO(img.read())
         png_file = Image.open(img_file)
-        png_file.save("tilly.png")
+        png_file.save(image_file)
+        with open(text_file, 'w') as file:
+            file.write(str(full_text.output_task))
     except UnidentifiedImageError:
         print("Error: Unable to identify image format")
 
