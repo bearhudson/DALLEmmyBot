@@ -1,11 +1,12 @@
 import urllib.request
-
+import urllib.parse
 import requests
 from PIL import UnidentifiedImageError
 from PIL import Image
 from io import BytesIO
 import openai
 import os
+from griptape.structures import Agent
 
 
 def generate(client, text):
@@ -25,10 +26,16 @@ def main():
     client = openai.OpenAI(
         api_key=os.getenv("OPENAI_API_KEY")
     )
-    text = ("A female chihuahua pit-bull mix with a dark brindle coat with a brindle chest "
-            "and a bone in her mouth laying down in the sand on a tropical beach looking at the ocean with "
-            "volumetric lighting and lens bokeh.")
-    url1 = generate(client, text)
+    gt_agent = Agent()
+    r_topic = requests.get('https://en.wikipedia.org/wiki/Special:Random')
+    decoded_url = urllib.parse.unquote(r_topic.url)
+    topic_index = decoded_url.rfind('/')
+    r_topic_str = decoded_url[topic_index + 1:].replace('_', ' ')
+    full_text = gt_agent.run(f"Write me a sentence about {r_topic_str} from the perspective of a director writing a "
+                             f"movie scene and include as much detail as possible about the colors, "
+                             f"angles, subjects and objects in the scene but do not use the word camera.")
+    print(full_text.output_task)
+    url1 = generate(client, str(full_text.output_task))
     response = requests.get(url1)
     try:
         img = urllib.request.urlopen(response.url)
