@@ -37,8 +37,8 @@ def main():
     full_text = gt_agent.run(f"Write me a sentence about {r_topic_str} from the perspective of a director writing a "
                              f"movie scene at a random time in the day and include as much detail as possible "
                              f"about the colors, angles, subjects and objects in the scene but do not use "
-                             f"the word camera and keep the view static and obey the rule of thirds including the "
-                             f"following details -- {item_description}.")
+                             f"the word camera and keep the view static and obey the rule of thirds including taking"
+                             f"into consideration the following details -- {item_description}.")
     print(full_text.output_task)
     url1 = generate(client, str(full_text.output_task))
     response = requests.get(url1)
