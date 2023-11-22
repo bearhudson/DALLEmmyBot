@@ -43,8 +43,8 @@ def main():
     url1 = generate(client, str(full_text.output_task))
     response = requests.get(url1)
     try:
-        text_file = f"{t_stamp}-{r_topic_str}.txt"
-        image_file = f"{t_stamp}-{r_topic_str}.png"
+        text_file = f"./output/{t_stamp}-{r_topic_str}.txt"
+        image_file = f"./output/{t_stamp}-{r_topic_str}.png"
         img = urllib.request.urlopen(response.url)
         img_file = BytesIO(img.read())
         png_file = Image.open(img_file)
