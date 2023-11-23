@@ -63,9 +63,14 @@ def main():
         print("Error: Unable to identify image format")
         exit(1)
     login()
-    community = get_community(community_list[0])
-    community_json = json.loads(community)
-    community_id = community_json["community_view"]["community"]["id"]
+    community_id_list = []
+    community_json = {}
+    for community in community_list:
+        cur_community = get_community(community)
+        community_json = json.loads(cur_community)
+    community_id_list.append(community_json["community_view"]["community"]["id"])
+    for comm_id in community_id_list:
+        print(comm_id)
 
 
 if __name__ == "__main__":
