@@ -7,9 +7,12 @@ from PIL import Image
 from io import BytesIO
 import openai
 import os
+import json
 from griptape.structures import Agent
 import time
 from shot_type import shot_type_list, lens_type
+from community_list import community_list
+from lemmy import login, get_community
 
 
 def generate(client, text):
@@ -38,13 +41,10 @@ def main():
         r_topic_str = decoded_url[topic_index + 1:].replace('_', ' ')
         item_description_full = gt_agent.run(f"Tell me some brief details about {r_topic_str}.")
         item_description = item_description_full.output_task.output
-        full_text = gt_agent.run(f"Write me a brief paragraph description about {r_topic_str} "
+        full_text = gt_agent.run(f"Describe for me a painting about {r_topic_str} "
                                  f"with a {choice(shot_type_list)}, and {choice(lens_type)} style lens, "
-                                 f"describe the scene and relative, local art style from the perspective of a painter "
-                                 f"painting a movie scene at a specific, random time in the day and include as much "
-                                 f"detail as possible about the colors, describe the subjects and objects in the scene "
-                                 f"but do not use the word camera and keep the view static and obey the rule of thirds "
-                                 f"including taking into consideration the following details -- {item_description.value}.")
+                                 f"with the following details: {item_description.value} -- using a relative "
+                                 f"art style for the area and time.")
         url1 = generate(client, str(full_text.output_task))
         response = requests.get(url1)
     except openai.BadRequestError:
@@ -62,6 +62,10 @@ def main():
     except UnidentifiedImageError:
         print("Error: Unable to identify image format")
         exit(1)
+    login()
+    community = get_community(community_list[0])
+    community_json = json.loads(community)
+    community_id = community_json["community_view"]["community"]["id"]
 
 
 if __name__ == "__main__":

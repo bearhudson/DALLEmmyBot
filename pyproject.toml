@@ -11,6 +11,8 @@ requests = "^2.31.0"
 pillow = "^10.1.0"
 openai = "^1.3.4"
 griptape = "^0.20.0"
+pyupload = "^0.1.4"
+imgur-python = "^0.2.4"
 
 
 [build-system]
