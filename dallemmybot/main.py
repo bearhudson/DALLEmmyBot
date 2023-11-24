@@ -7,12 +7,11 @@ from PIL import Image
 from io import BytesIO
 import openai
 import os
-import json
 from griptape.structures import Agent
 import time
 from shot_type import shot_type_list, lens_type
-from community_list import community_list
-from lemmy import login, get_community
+from lemmy_funct import lemmy_post
+from mastodon_funct import make_post as mastodon_post
 
 
 def generate(client, text):
@@ -39,8 +38,8 @@ def main():
         decoded_url = urllib.parse.unquote(r_topic.url)
         topic_index = decoded_url.rfind('/')
         r_topic_str = decoded_url[topic_index + 1:].replace('_', ' ')
-        r_topic_str = "a robotic rodent lemming in a neon vaporwave jungle"
-        item_description_full = gt_agent.run(f"Tell me some brief details about {r_topic_str}.")
+        item_description_full = gt_agent.run(f"Tell me some brief details about {r_topic_str} "
+                                             f"using 400 words or less.")
         item_description = item_description_full.output_task.output
         full_text = gt_agent.run(f"Describe for me a painting about {r_topic_str} "
                                  f"with a {choice(shot_type_list)}, and {choice(lens_type)} style lens, "
@@ -65,15 +64,15 @@ def main():
     except UnidentifiedImageError:
         print("Error generating images.")
         exit(1)
-    login()
-    community_id_list = []
-    community_json = {}
-    for community in community_list:
-        cur_community = get_community(community)
-        community_json = json.loads(cur_community)
-    community_id_list.append(community_json["community_view"]["community"]["id"])
-    for comm_id in community_id_list:
-        print(comm_id)
+    truncate_out = str(full_text.output_task).split('\n')[0]
+    print(truncate_out)
+    url = mastodon_post(
+        image=image_file,
+        title=f"{r_topic_str}",
+        description=f"{r_topic_str} -- {truncate_out} #DALLE #DALLE3 #AIart #openai #llm #imagegeneration")
+    lemmy_post(url=url,
+               title=f"{r_topic_str}",
+               description=f"{truncate_out}")
 
 
 if __name__ == "__main__":
