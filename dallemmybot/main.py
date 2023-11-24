@@ -38,6 +38,7 @@ def main():
         decoded_url = urllib.parse.unquote(r_topic.url)
         topic_index = decoded_url.rfind('/')
         r_topic_str = decoded_url[topic_index + 1:].replace('_', ' ')
+        print(f"\n\n------------------\n{r_topic_str}\n\n")
         item_description_full = gt_agent.run(f"Tell me some brief details about {r_topic_str} "
                                              f"using 400 words or less.")
         item_description = item_description_full.output_task.output

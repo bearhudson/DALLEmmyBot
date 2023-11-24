@@ -39,9 +39,28 @@ def get_community(bearer_token, comm_str):
         return False
 
 
-def make_post(community_id, title, url, description):
+def make_post(bearer_token, community_id, title, url, description):
     try:
+        api_url = "https://lemm.ee/api/v3/post"
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json",
+            "authorization": f"Bearer {bearer_token}"
+        }
+        payload = {
+            "auth": {
+                "username_or_email": f"{USER}",
+                "password": f"{PASSWORD}",
+            },
+            "name": f"{title}",
+            "community_id": int(community_id),
+            "url": f"{url}",
+            "body": f"{description}"
+        }
         print(f"Making lemmy post in {community_id} {url} -- {title} -- {description}")
+        response = requests.post(api_url, headers=headers, json=payload)
+        print(f"Lemmy post: {response}")
+        return True
     except RequestException:
         return False
 
@@ -51,7 +70,8 @@ def lemmy_post(url, title, description):
     for community in community_list:
         comm_id = get_community(bearer_token=bearer_token, comm_str=community)
         print(comm_id)
-        make_post(community_id=comm_id,
+        make_post(bearer_token=bearer_token,
+                  community_id=comm_id,
                   url=url,
                   title=title,
                   description=description)
