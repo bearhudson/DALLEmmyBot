@@ -40,7 +40,7 @@ def main():
         r_topic_str = decoded_url[topic_index + 1:].replace('_', ' ')
         print(f"\n\n------------------\n{r_topic_str}\n\n")
         item_description_full = gt_agent.run(f"Tell me some brief details about {r_topic_str} "
-                                             f"using 400 words or less.")
+                                             f"using 450 words or less.")
         item_description = item_description_full.output_task.output
         full_text = gt_agent.run(f"Describe for me a painting about {r_topic_str} "
                                  f"with a {choice(shot_type_list)}, and {choice(lens_type)} style lens, "

@@ -5,7 +5,7 @@ shot_type_list = [
     "close up shot",
     "extreme close up shot",
     "extreme long shot",
-    "cowboy shot",
+    "chest shot",
     "over the shoulder shot",
     "pov shot",
     "establishing shot",
