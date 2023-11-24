@@ -1,4 +1,5 @@
 .idea
 *.png
 *.txt
+*.jpg
 ./output
