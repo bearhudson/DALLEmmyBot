@@ -69,7 +69,8 @@ def main():
     url = mastodon_post(
         image=image_file,
         title=f"{truncate_out}",
-        description=f"{truncate_out} \n\n#DALLE #DALLE3 #AIart #openai #llm #imagegeneration")
+        description=f"{truncate_out}\n\n{decoded_url}\n\n#DALLE #DALLE3 #AIart #openai #llm #imagegeneration #wiki "
+                    f"#wikipedia")
     lemmy_post(url=url,
                title=f"{r_topic_str}",
                description=f"{truncate_out}")
