@@ -13,7 +13,10 @@ def make_post(image, description, title):
         access_token=API_KEY,
         api_base_url=INSTANCE
     )
-    media = mastodon.media_post(image, description=title)
-    post = mastodon.status_post(description, media_ids=media)
-    print(post["uri"])
-    return post["uri"]
+    try:
+        media = mastodon.media_post(image, description=title)
+        post = mastodon.status_post(description, media_ids=media)
+        return post["uri"]
+    except MastodonError:
+        print("Mastodon Error.")
+        exit(1)

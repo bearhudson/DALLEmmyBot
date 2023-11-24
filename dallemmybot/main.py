@@ -64,12 +64,12 @@ def main():
     except UnidentifiedImageError:
         print("Error generating images.")
         exit(1)
-    truncate_out = str(full_text.output_task).split('\n')[0]
+    truncate_out = str(item_description.value).split('\n')[0]
     print(truncate_out)
     url = mastodon_post(
         image=image_file,
-        title=f"{r_topic_str}",
-        description=f"{r_topic_str} -- {truncate_out} #DALLE #DALLE3 #AIart #openai #llm #imagegeneration")
+        title=f"{truncate_out}",
+        description=f"{truncate_out} \n\n#DALLE #DALLE3 #AIart #openai #llm #imagegeneration")
     lemmy_post(url=url,
                title=f"{r_topic_str}",
                description=f"{truncate_out}")
