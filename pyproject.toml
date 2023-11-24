@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "dallemmybot"
 version = "0.1.0"
-description = ""
+description = "An OpenAI powered bot for Lemmy"
 authors = ["Brian <reallybrianhudson@gmail.com>"]
 readme = "README.md"
 
@@ -13,6 +13,7 @@ openai = "^1.3.4"
 griptape = "^0.20.0"
 pyupload = "^0.1.4"
 imgur-python = "^0.2.4"
+mastodon-py = "^1.8.1"
 
 
 [build-system]

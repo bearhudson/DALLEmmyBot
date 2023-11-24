@@ -39,12 +39,13 @@ def main():
         decoded_url = urllib.parse.unquote(r_topic.url)
         topic_index = decoded_url.rfind('/')
         r_topic_str = decoded_url[topic_index + 1:].replace('_', ' ')
+        r_topic_str = "a robotic rodent lemming in a neon vaporwave jungle"
         item_description_full = gt_agent.run(f"Tell me some brief details about {r_topic_str}.")
         item_description = item_description_full.output_task.output
         full_text = gt_agent.run(f"Describe for me a painting about {r_topic_str} "
                                  f"with a {choice(shot_type_list)}, and {choice(lens_type)} style lens, "
                                  f"with the following details: {item_description.value} -- using a relative "
-                                 f"art style for the area and time.")
+                                 f"art style for the location and timeframe.")
         url1 = generate(client, str(full_text.output_task))
         response = requests.get(url1)
     except openai.BadRequestError:
@@ -53,14 +54,16 @@ def main():
     try:
         text_file = f"./output/{t_stamp}-{r_topic_str}.txt"
         image_file = f"./output/{t_stamp}-{r_topic_str}.png"
+        jpeg_file = f"./output/{t_stamp}-{r_topic_str}.jpeg"
         img = urllib.request.urlopen(response.url)
         img_file = BytesIO(img.read())
         png_file = Image.open(img_file)
         png_file.save(image_file)
+        png_file.convert("RGB").save(jpeg_file, "JPEG", quality=99)
         with open(text_file, 'w') as file:
             file.write(f"{item_description.value}\n\n{str(full_text.output_task)}")
     except UnidentifiedImageError:
-        print("Error: Unable to identify image format")
+        print("Error generating images.")
         exit(1)
     login()
     community_id_list = []

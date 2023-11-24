@@ -2,4 +2,5 @@
 *.png
 *.txt
 *.jpg
-./output
+*.jpeg
+./output/
