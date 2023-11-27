@@ -13,7 +13,7 @@ def get_topic():
 
 def get_verified_topic():
     verified = False
-    nlp_en = spacy.load("en_core_web_sm")
+    nlp_en = spacy.load("en_core_web_lg")
     nlp_wiki = spacy.load("xx_ent_wiki_sm")
     # TODO: Add more language support
     topic = None
@@ -23,7 +23,6 @@ def get_verified_topic():
         str_check = nlp_en(topic)
         if len(str_check.ents) > 0:
             for entry in str_check.ents:
-                print(entry.text, entry.label_)
                 if (entry.label_ == "PERSON" or
                         entry.label_ == "PER" or
                         entry.label_ == "EVENT" or
@@ -33,7 +32,6 @@ def get_verified_topic():
         str_check = nlp_wiki(topic)
         if len(str_check.ents) > 0:
             for entry in str_check.ents:
-                print(entry.text, entry.label_)
                 if (entry.label_ == "PERSON" or
                         entry.label_ == "PER" or
                         entry.label_ == "EVENT" or
