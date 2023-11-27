@@ -13,19 +13,32 @@ def get_topic():
 
 def get_verified_topic():
     verified = False
-    nlp = spacy.load("en_core_web_sm")
+    nlp_en = spacy.load("en_core_web_sm")
+    nlp_wiki = spacy.load("xx_ent_wiki_sm")
     # TODO: Add more language support
     topic = None
     url = None
     while not verified:
         topic, url = get_topic()
-        str_check = nlp(topic)
+        str_check = nlp_en(topic)
         if len(str_check.ents) > 0:
             for entry in str_check.ents:
                 print(entry.text, entry.label_)
                 if (entry.label_ == "PERSON" or
+                        entry.label_ == "PER" or
                         entry.label_ == "EVENT" or
-                        entry.label_ == "ORG"):
+                        entry.label_ == "ORG" or
+                        entry.label_ == "GPE"):
+                    topic, url = get_topic()
+        str_check = nlp_wiki(topic)
+        if len(str_check.ents) > 0:
+            for entry in str_check.ents:
+                print(entry.text, entry.label_)
+                if (entry.label_ == "PERSON" or
+                        entry.label_ == "PER" or
+                        entry.label_ == "EVENT" or
+                        entry.label_ == "ORG" or
+                        entry.label_ == "GPE"):
                     topic, url = get_topic()
                 verified = True
     return topic, url
