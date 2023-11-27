@@ -12,6 +12,7 @@ import time
 from shot_type import shot_type_list, lens_type
 from lemmy_funct import lemmy_post
 from mastodon_funct import make_post as mastodon_post
+from wikipedia import get_verified_topic
 
 
 def generate(client, text):
@@ -30,15 +31,14 @@ def generate(client, text):
 def main():
     try:
         t_stamp = int(time.time())
+        r_topic_str, decoded_url = get_verified_topic()
+        print(f"\n\n------------------\n{r_topic_str}\n{decoded_url}\n------------------\n")
+        # pause to check output and give time to cancel and save $$
+        time.sleep(30)
         client = openai.OpenAI(
             api_key=os.getenv("OPENAI_API_KEY")
         )
         gt_agent = Agent()
-        r_topic = requests.get('https://en.wikipedia.org/wiki/Special:Random')
-        decoded_url = urllib.parse.unquote(r_topic.url)
-        topic_index = decoded_url.rfind('/')
-        r_topic_str = decoded_url[topic_index + 1:].replace('_', ' ')
-        print(f"\n\n------------------\n{r_topic_str}\n\n")
         item_description_full = gt_agent.run(f"Tell me some brief details about {r_topic_str} "
                                              f"using 450 words or less.")
         item_description = item_description_full.output_task.output
