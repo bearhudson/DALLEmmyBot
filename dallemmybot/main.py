@@ -10,7 +10,7 @@ import os
 from griptape.structures import Agent
 import time
 from shot_type import shot_type_list, lens_type
-from lemmy_funct import lemmy_post
+from lemmy_funct2 import create_lemmy_post
 from mastodon_funct import make_post as mastodon_post
 from wikipedia import get_verified_topic
 
@@ -72,9 +72,7 @@ def main():
         title=f"{truncate_out}",
         description=f"{truncate_out}\n\n{decoded_url}\n\n#DALLE #DALLE3 #AIart #openai #llm #imagegeneration #wiki "
                     f"#wikipedia")
-    lemmy_post(url=url,
-               title=f"{r_topic_str}",
-               description=f"{truncate_out}")
+    create_lemmy_post(url=url, name=f"[DALLE3] {r_topic_str}", body=f"{truncate_out}")
 
 
 if __name__ == "__main__":

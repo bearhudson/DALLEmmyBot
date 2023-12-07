@@ -1,5 +1,5 @@
 community_list = [
-    "imageai@sh.itjust.works",
+#    "imageai@sh.itjust.works",
     "dallemmybot@lemm.ee",
-    "ai_art@lemmy.world"
+#    "ai_art@lemmy.world"
                   ]

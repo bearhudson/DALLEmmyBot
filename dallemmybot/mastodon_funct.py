@@ -19,4 +19,3 @@ def make_post(image, description, title):
         return post["uri"]
     except MastodonError:
         print("Mastodon Error.")
-        exit(1)

@@ -1768,6 +1768,20 @@ files = [
 ]
 
 [[package]]
+name = "pythorhead"
+version = "0.19.2"
+description = "A python library for interacting with Lemmy API"
+optional = false
+python-versions = "<3.12,>=3.8"
+files = [
+    {file = "pythorhead-0.19.2-py3-none-any.whl", hash = "sha256:2d5b541354b88b1604cb97d0702b66e101a618d61a4e072f610d42181047a257"},
+    {file = "pythorhead-0.19.2.tar.gz", hash = "sha256:9a7ec3b54941c36f403262e809ca8cab032517e401f476d27f43e835a2b80018"},
+]
+
+[package.dependencies]
+requests = ">=2.31.0,<3.0.0"
+
+[[package]]
 name = "pytz"
 version = "2023.3.post1"
 description = "World timezone definitions, modern and historical"
@@ -2889,4 +2903,4 @@ test = ["websockets"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "e01f6bfa9406623821192c5ea4879ebc53c33883332636af333637a4166a81b0"
+content-hash = "631000052d3f82222c0e25b06409f19ff5e87fc19638ff8eb1b945f3d6f7db95"
