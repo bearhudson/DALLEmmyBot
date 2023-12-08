@@ -5,7 +5,7 @@ from community_list import community_list
 USER = os.getenv("LEMMY_USER")
 PASSWORD = os.getenv("LEMMY_PASSWORD")
 
-lemmy_obj = Lemmy("https://lemm.ee", request_timeout=2)
+lemmy_obj = Lemmy(api_base_url="https://lemm.ee")
 lemmy_obj.log_in(USER, PASSWORD)
 
 

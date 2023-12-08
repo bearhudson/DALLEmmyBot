@@ -9,7 +9,7 @@ import openai
 import os
 from griptape.structures import Agent
 import time
-from shot_type import shot_type_list, lens_type
+from painting_constants import shot_type_list, lens_type, painting_type
 from lemmy_funct2 import create_lemmy_post
 from mastodon_funct import make_post as mastodon_post
 from wikipedia import get_verified_topic
@@ -43,6 +43,7 @@ def main():
                                              f"using 450 words or less.")
         item_description = item_description_full.output_task.output
         full_text = gt_agent.run(f"Describe for me a painting about {r_topic_str} "
+                                 f"in the painting style of {choice(painting_type)} "
                                  f"with a {choice(shot_type_list)}, and {choice(lens_type)} style lens, "
                                  f"with the following details: {item_description.value} -- using a relative "
                                  f"art style for the location and timeframe.")
