@@ -10,9 +10,9 @@ import os
 from griptape.structures import Agent
 import time
 from painting_constants import shot_type_list, lens_type, painting_type
-from lemmy_funct2 import create_lemmy_post
+from lemmy_funct2 import create_lemmy_posts
 from mastodon_funct import make_post as mastodon_post
-from wikipedia import get_verified_topic
+from wikipedia import wiki_return_topic
 
 
 def generate(client, text):
@@ -31,16 +31,14 @@ def generate(client, text):
 def main():
     try:
         t_stamp = int(time.time())
-        r_topic_str, decoded_url = get_verified_topic()
+        r_topic_str, decoded_url = wiki_return_topic()
         print(f"\n\n------------------\n{r_topic_str}\n{decoded_url}\n------------------\n")
-        # pause to check output and give time to cancel and save $$
-        time.sleep(30)
         client = openai.OpenAI(
             api_key=os.getenv("OPENAI_API_KEY")
         )
         gt_agent = Agent()
         item_description_full = gt_agent.run(f"Tell me some brief details about {r_topic_str} "
-                                             f"using 450 words or less.")
+                                             f"using 400 words or less.")
         item_description = item_description_full.output_task.output
         full_text = gt_agent.run(f"Describe for me a painting about {r_topic_str} "
                                  f"in the painting style of {choice(painting_type)} "
@@ -73,7 +71,7 @@ def main():
         title=f"{truncate_out}",
         description=f"{truncate_out}\n\n{decoded_url}\n\n#DALLE #DALLE3 #AIart #openai #llm #imagegeneration #wiki "
                     f"#wikipedia")
-    create_lemmy_post(url=url, name=f"[DALLE3] {r_topic_str}", body=f"{truncate_out}")
+    create_lemmy_posts(url=url, name=f"[DALLE3] {r_topic_str}", body=f"{truncate_out}")
 
 
 if __name__ == "__main__":
