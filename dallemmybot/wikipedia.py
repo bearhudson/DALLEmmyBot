@@ -42,26 +42,26 @@ def get_verified_topic():
     return topic, url
 
 
-def get_verified_topic_list():
+def get_verified_topic_list(topic_num):
     result_list = []
-    for _ in range(10):
+    for _ in range(topic_num):
         result = get_verified_topic()  # Assuming get_verified_topic is a function
         result_list.append(result)
     return result_list
 
 
-def wiki_return_topic():
-    print("Generating Topics...")
-    topic_list = get_verified_topic_list()
+def wiki_return_topic(topic_count):
+    print("Fetching topics...")
+    topic_list = get_verified_topic_list(topic_count)
     for title, url in enumerate(topic_list, start=1):
         print(f"{title}. {url}")
     while True:
         try:
-            user_choice = int(input("Select an item (1-10): "))
-            if 1 <= user_choice <= 10:
+            user_choice = int(input(f"Select an item (1-{topic_count}): "))
+            if 1 <= user_choice <= topic_count:
                 selected_item = topic_list[user_choice - 1]
                 return selected_item
             else:
-                print("Invalid choice. Please enter a number between 1 and 10.")
+                print(f"Invalid choice. Please enter a number between 1 and {topic_count}.")
         except ValueError:
             print("Invalid input. Please enter a valid number.")

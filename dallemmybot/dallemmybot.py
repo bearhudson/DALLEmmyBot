@@ -1,3 +1,6 @@
+#!/usr/local/bin/python3
+
+import sys
 import urllib.request
 import urllib.parse
 from random import choice
@@ -10,7 +13,7 @@ import os
 from griptape.structures import Agent
 import time
 from painting_constants import shot_type_list, lens_type, painting_type
-from lemmy_funct2 import create_lemmy_posts
+from lemmy_funct import create_lemmy_posts
 from mastodon_funct import make_post as mastodon_post
 from wikipedia import wiki_return_topic
 
@@ -28,10 +31,10 @@ def generate(client, text):
     return image_url.url
 
 
-def main():
+def main(count):
     try:
         t_stamp = int(time.time())
-        r_topic_str, decoded_url = wiki_return_topic()
+        r_topic_str, decoded_url = wiki_return_topic(count)
         print(f"\n\n------------------\n{r_topic_str}\n{decoded_url}\n------------------\n")
         client = openai.OpenAI(
             api_key=os.getenv("OPENAI_API_KEY")
@@ -44,7 +47,7 @@ def main():
                                  f"in the painting style of {choice(painting_type)} "
                                  f"with a {choice(shot_type_list)}, and {choice(lens_type)} style lens, "
                                  f"with the following details: {item_description.value} -- using a relative "
-                                 f"art style for the location and timeframe.")
+                                 f"art style for the location and timeframe.\n")
         url1 = generate(client, str(full_text.output_task))
         response = requests.get(url1)
     except openai.BadRequestError:
@@ -74,5 +77,20 @@ def main():
     create_lemmy_posts(url=url, name=f"[DALLE3] {r_topic_str}", body=f"{truncate_out}")
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    if len(sys.argv) >= 3:
+        print("Usage: ./dallemmybot.py [Topic Count](optional)")
+        exit(1)
+    if len(sys.argv) == 1:
+        print("Generating 20 topics to pick from. To select more, use ./dallemmybot [Topic Count]")
+        main(20)
+    if len(sys.argv) == 2:
+        topic_count = sys.argv[1]
+        try:
+            topic_count = int(topic_count)
+        except ValueError:
+            print("Please provide a valid number.")
+            sys.exit(1)
+        main(count=topic_count)
+
+
