@@ -9,14 +9,10 @@ for container_id in $(docker ps -aqf "name=lemmybot"); do
 done
   
 echo -ne "Starting build.\n"
-
 docker build -t dallemmybot .
 
 echo -ne "Running Container.\n"
-
 docker run --name dallemmybot --env-file .env -it dallemmybot 
 
 echo -ne "Copying files out of container.\n"
-
 docker cp dallemmybot:/usr/src/app/output .
-
