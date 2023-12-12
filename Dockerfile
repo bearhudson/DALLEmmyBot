@@ -12,10 +12,10 @@ RUN pip install --upgrade pip \
     && poetry config virtualenvs.create false \
     && poetry install --no-dev --no-interaction --no-ansi \
     && python -m spacy download xx_ent_wiki_sm \
-    && python -m spacy download en_core_web_lg
-
+    && python -m spacy download en_core_web_lg \
+    && mkdir output
 # Copy the content of the local src directory to the working directory
 COPY . ./
 
 # Specify the command to run on container start
-CMD [ "python", "dallemmybot/main.py" ]
+CMD [ "python", "dallemmybot/dallemmybot.py" ]
