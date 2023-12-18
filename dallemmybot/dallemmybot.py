@@ -92,5 +92,3 @@ if __name__ == '__main__':
             print("Please provide a valid number.")
             sys.exit(1)
         main(count=topic_count)
-
-

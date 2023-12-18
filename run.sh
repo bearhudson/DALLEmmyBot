@@ -16,3 +16,9 @@ docker run --name dallemmybot --env-file .env -it dallemmybot
 
 echo -ne "Copying files out of container.\n"
 docker cp dallemmybot:/usr/src/app/output .
+
+for container_id in $(docker ps -aqf "name=lemmybot"); do
+    echo "Stopping and removing container with ID: $container_id"
+    docker stop "$container_id"
+    docker rm "$container_id"
+done

@@ -15,7 +15,7 @@ pyupload = "^0.1.4"
 imgur-python = "^0.2.4"
 mastodon-py = "^1.8.1"
 spacy = "^3.7.2"
-pythorhead = "^0.19.2"
+pythorhead = "^0.20.0"
 
 
 [build-system]
