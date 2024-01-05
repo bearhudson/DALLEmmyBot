@@ -130,6 +130,19 @@ files = [
 test = ["Pillow", "numpy", "pytest"]
 
 [[package]]
+name = "bs4"
+version = "0.0.1"
+description = "Dummy package for Beautiful Soup"
+optional = false
+python-versions = "*"
+files = [
+    {file = "bs4-0.0.1.tar.gz", hash = "sha256:36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a"},
+]
+
+[package.dependencies]
+beautifulsoup4 = "*"
+
+[[package]]
 name = "catalogue"
 version = "2.0.10"
 description = "Super lightweight function registries for your library"
@@ -3019,4 +3032,4 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "56fc670bb4bce9c6f66f8d98b82bfc55b650bead579667fadf8320b3bd9be1de"
+content-hash = "4c34ead938f7ea603f74ecdfb624b7829600e8b48b13fe2bf97934d87c9e752f"
