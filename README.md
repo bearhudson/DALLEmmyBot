@@ -18,7 +18,7 @@ Run the script wait for the list of prompts, pick the one you want, and then loo
 
 echo -ne "Removing old containers if they exist.\n"
 
-for container_id in $(docker ps -aqf "name=lemmybot"); do
+for container_id in $(docker ps -aqf "name=dallemmybot"); do
     echo "Stopping and removing container with ID: $container_id"
     docker stop "$container_id"
     docker rm "$container_id"
@@ -32,4 +32,10 @@ docker run --name dallemmybot --env-file .env -it dallemmybot
 
 echo -ne "Copying files out of container.\n"
 docker cp dallemmybot:/usr/src/app/output .
+
+for container_id in $(docker ps -aqf "name=dallemmybot"); do
+    echo "Stopping and removing container with ID: $container_id"
+    docker stop "$container_id"
+    docker rm "$container_id"
+done
 ```
