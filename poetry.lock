@@ -1717,13 +1717,13 @@ files = [
 
 [[package]]
 name = "pythorhead"
-version = "0.20.0"
+version = "0.20.1"
 description = "A python library for interacting with Lemmy API"
 optional = false
 python-versions = "<3.12,>=3.8"
 files = [
-    {file = "pythorhead-0.20.0-py3-none-any.whl", hash = "sha256:8adeb8147be14f57a131d9a0afea0c6f4439e33d21b61fc6444268075b1612a0"},
-    {file = "pythorhead-0.20.0.tar.gz", hash = "sha256:a0329b70440d938b923345af9250735bfc97051d7efb237be235590b196817ba"},
+    {file = "pythorhead-0.20.1-py3-none-any.whl", hash = "sha256:a6b307103013c3f7d6d8166b2df622f9d745243648553c82b9abdecc1834a187"},
+    {file = "pythorhead-0.20.1.tar.gz", hash = "sha256:b716460ceb1c43d0c6115e722e930a5d7de7543743a21e2faf5e66db2819375b"},
 ]
 
 [package.dependencies]
