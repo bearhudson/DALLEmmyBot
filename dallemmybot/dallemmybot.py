@@ -48,7 +48,8 @@ def main(count):
                                  f"with a {choice(shot_type_list)}, and {choice(lens_type)} style lens, "
                                  f"with the following details: {item_description.value} -- using a relative "
                                  f"art style for the location and timeframe.\n")
-        url1 = generate(client, str(full_text.output_task))
+        url1 = generate(client, str(f"I NEED to test how the tool works with extremely simple prompts. "
+                                    f"DO NOT add any detail, just use it AS-IS:{full_text.output_task}"))
         response = requests.get(url1)
     except openai.BadRequestError:
         print("Error generating prompt")
